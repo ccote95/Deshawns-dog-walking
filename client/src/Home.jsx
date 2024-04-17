@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { getDog, getGreeting } from "./apiManager";
 import { useEffect, useState } from "react";
 
@@ -23,7 +24,7 @@ export default function Home() {
     <>
     <p>{greeting.message}</p>
         {dog.map((dog) =>
-      <p key = {dog.id}>{dog.name}</p>
+      <p key = {dog.id}><Link to ={`/${dog.id}`}  style={{ textDecoration: "none", color: "black" }}>{dog.name}</Link></p>
       )}
 
     </>

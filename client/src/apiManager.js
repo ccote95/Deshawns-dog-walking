@@ -7,3 +7,8 @@ export const getDog = async () => {
   const res = await fetch("/api/dog");
   return res.json();
 }
+
+export const getDogById = async (id) => {
+  const res = await fetch(`/api/dog/${id}`);
+  return res.json();
+}
