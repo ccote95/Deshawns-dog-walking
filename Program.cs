@@ -3,12 +3,12 @@ using DeShawnsDogWalking.Models.DTOs;
 
 List<Dog> dogs = new List<Dog>{
 
-        new() { Name = "Buddy", Id = 1, CityId = 1, WalkerId = 201 },
-        new()  { Name = "Max", Id = 2, CityId = 2, WalkerId = 202 },
-        new()  { Name = "Bailey", Id = 3, CityId = 3, WalkerId = 203 },
-        new() { Name = "Charlie", Id = 4, CityId = 4, WalkerId = 204 },
-       new()   { Name = "Lucy", Id = 5, CityId = 5, WalkerId = 205 },
-       new() { Name = "Daisy", Id = 6, CityId = 6, WalkerId = 206 },
+        new() { Name = "Buddy", Id = 1, CityId = 1, WalkerId = 1 },
+        new()  { Name = "Max", Id = 2, CityId = 2, WalkerId = 2 },
+        new()  { Name = "Bailey", Id = 3, CityId = 3, WalkerId = 3 },
+        new() { Name = "Charlie", Id = 4, CityId = 4, WalkerId = 4 },
+       new()   { Name = "Lucy", Id = 5, CityId = 5, WalkerId = 5 },
+       new() { Name = "Daisy", Id = 6, CityId = 6, WalkerId = 6 },
 
  };
 
@@ -82,4 +82,17 @@ app.MapGet("/api/dog", () =>
     return dogDTOs;
 });
 
+
+app.MapGet("/api/dog/{id}", (int id) =>
+{
+    Dog dog = dogs.FirstOrDefault(d => d.Id == id);
+    return new DogDTO
+    {
+        Id = dog.Id,
+        Name = dog.Name,
+        CityId = dog.CityId,
+        WalkerId = dog.WalkerId
+
+    };
+});
 app.Run();
