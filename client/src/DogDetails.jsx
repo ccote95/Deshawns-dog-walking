@@ -9,4 +9,18 @@ export const DogDetails = () => {
    useEffect(() => {
     getDogById(dogId).then(setDog)
    },[])
+
+   return (
+    <>
+    <div>
+        Dogs Name: {dog.name}
+    </div>
+    <div>
+        Dogs City: {dog.city?.name}
+    </div>
+    <div>
+        Current Walker: {dog.walker?.name}
+    </div>
+    </>
+   )
 }

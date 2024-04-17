@@ -27,12 +27,12 @@ List<City> cities = new List<City>{
 List<Walker> walkers = new List<Walker>{
 
 
-       new() { Id = 201, Name = "John" },
-        new() { Id = 202, Name = "Emily" },
-       new()  { Id = 203, Name = "Michael" },
-       new()  { Id = 204, Name = "Sarah" },
-        new() { Id = 205, Name = "David" },
-        new()  { Id = 206, Name = "Jessica" },
+       new() { Id = 1, Name = "John" },
+        new() { Id = 2, Name = "Emily" },
+       new()  { Id = 3, Name = "Michael" },
+       new()  { Id = 4, Name = "Sarah" },
+        new() { Id = 5, Name = "David" },
+        new()  { Id = 6, Name = "Jessica" },
 
          };
 
@@ -86,12 +86,24 @@ app.MapGet("/api/dog", () =>
 app.MapGet("/api/dog/{id}", (int id) =>
 {
     Dog dog = dogs.FirstOrDefault(d => d.Id == id);
+    City city = cities.FirstOrDefault(c => c.Id == dog.CityId);
+    Walker walker = walkers.FirstOrDefault(w => w.Id == dog.WalkerId);
     return new DogDTO
     {
         Id = dog.Id,
         Name = dog.Name,
         CityId = dog.CityId,
-        WalkerId = dog.WalkerId
+        City = new CityDTO
+        {
+            Id = city.Id,
+            Name = city.Name
+        },
+        WalkerId = dog.WalkerId,
+        Walker = new WalkerDTO
+        {
+            Id = walker.Id,
+            Name = walker.Name
+        }
 
     };
 });
