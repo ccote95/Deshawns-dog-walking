@@ -1,3 +1,6 @@
+using DeShawnsDogWalking.Models;
+using DeShawnsDogWalking.Models.DTOs;
+
 List<Dog> dogs = new List<Dog>{
 
         new() { Name = "Buddy", Id = 1, CityId = 1, WalkerId = 201 },
@@ -61,5 +64,22 @@ app.MapGet("/api/hello", () =>
     return new { Message = "Welcome to DeShawn's Dog Walking" };
 });
 
+//to get all dogs
+app.MapGet("/api/dog", () =>
+{
+    List<DogDTO> dogDTOs = new List<DogDTO>();
+    foreach (Dog dog in dogs)
+    {
+        dogDTOs.Add(new DogDTO
+        {
+            Id = dog.Id,
+            Name = dog.Name,
+            CityId = dog.CityId,
+            WalkerId = dog.WalkerId
+
+        });
+    }
+    return dogDTOs;
+});
 
 app.Run();

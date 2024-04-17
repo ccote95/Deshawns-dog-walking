@@ -1,3 +1,5 @@
+namespace DeShawnsDogWalking.Models;
+
 public class Dog
 {
     public int Id { get; set; }

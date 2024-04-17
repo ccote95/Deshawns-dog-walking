@@ -1,10 +1,11 @@
-import { getGreeting } from "./apiManager";
+import { getDog, getGreeting } from "./apiManager";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [greeting, setGreeting] = useState({
     message: "Not Connected to the API",
   });
+  const [dog, setDog] = useState([])
 
   useEffect(() => {
     getGreeting()
@@ -14,5 +15,19 @@ export default function Home() {
       });
   }, []);
 
-  return <p>{greeting.message}</p>;
+  useEffect(() => {
+    getDog().then(setDog)
+  },[]);
+
+  return (
+    <>
+    <p>{greeting.message}</p>
+        {dog.map((dog) =>
+      <p key = {dog.id}>{dog.name}</p>
+      )}
+
+    </>
+
+  );
+  
 }
