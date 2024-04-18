@@ -132,4 +132,19 @@ app.MapPost("/api/dog/create", (Dog dog) =>
         }
     });
 });
+
+//gets all of the cities
+app.MapGet("/api/city", () =>
+{
+    List<CityDTO> cityDTOs = new List<CityDTO>();
+    foreach (City city in cities)
+    {
+        cityDTOs.Add(new CityDTO
+        {
+            Id = city.Id,
+            Name = city.Name
+        });
+    }
+    return cityDTOs;
+});
 app.Run();
