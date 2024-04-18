@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addDog, getCities, getDog, getGreeting } from "./apiManager";
 import { useEffect, useState } from "react";
 import"./Home.css";
@@ -8,8 +8,9 @@ export default function Home() {
   });
   const [dog, setDog] = useState([])
   const [showModal, setShowModal]= useState(false)
-  const [newDog, setNewDog]=useState({})
+  const [newDog, setNewDog]=useState({cityId: null, name:""})
   const [cities, setCities] = useState({})
+  const navigate = useNavigate()
 
   useEffect(() => {
     getGreeting()
@@ -27,9 +28,19 @@ export default function Home() {
     getDog().then(setDog)
   },[]);
 
-  const handleSubmitClick =() => {
-    addDog(newDog)
+  const handleSubmitClick =(e) => {
+    e.preventDefault();
+    addDog(newDog).then(dogObj => {
+      console.log(dogObj);
+      navigate(`/${dogObj.id}`)
+    });
   }
+
+  // const handleRadioChange = (e) => {
+  //   const cityId = parseInt(e.target.value);
+  //   const cityName = chosenCity
+  //   setChosenCity({id: cityId, name: cityName})
+  // }
   return (
     <>
     <p>{greeting.message}</p>
@@ -48,7 +59,11 @@ export default function Home() {
             <span className="close" onClick ={() => setShowModal(false)}>&times;</span>
             <h2>Add a new dog!</h2>
             <div>
-            <input placeholder="Enter the new dogs name." type="text" onChange={(e) => setNewDog({Name:e.target.value})}/>
+            <input placeholder="Enter the new dogs name." type="text" onChange={(e) => {
+              const dogCopy = {...newDog};
+              dogCopy.name = e.target.value;
+              setNewDog(dogCopy)
+            }}/>
             
             </div>
             <div>
@@ -56,7 +71,11 @@ export default function Home() {
               {cities.map((city) => {
                 return (
                   <div>
-                    <input type="radio" value={city.id} name="city"/>
+                    <input type="radio" value={city.id} name="city"  onChange={(e) => {
+              const dogCopy = {...newDog};
+              dogCopy.cityId = e.target.value;
+              setNewDog(dogCopy)
+            }}/>
                     <label> {city.name}</label>
                   </div>
                 )
@@ -72,7 +91,7 @@ export default function Home() {
   );
   
 }
-/** need to get all cities going to have to also create an end point to get them.
+/** need to get all cities going to have to also create an end point to get them.X
  * need to iterate thru them and create either a drop down or checkboxes for them? check with someone on that
  * need to refactor the way im handling input changes. check capstone to remind yourself.
  * when they click submit it should add the dog and navigate them to the dogs details page.
