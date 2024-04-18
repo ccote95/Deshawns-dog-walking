@@ -53,7 +53,7 @@ export default function Home() {
       )}
       </div>
         {showModal && (
-            <form onSubmit={handleSubmitClick}>
+            <form  onSubmit={handleSubmitClick}>
         <div>
           <div>
             <span className="close" onClick ={() => setShowModal(false)}>&times;</span>
@@ -70,7 +70,7 @@ export default function Home() {
              <label>Where do they live?</label>
               {cities.map((city) => {
                 return (
-                  <div>
+                  <div key={city.id}>
                     <input type="radio" value={city.id} name="city"  onChange={(e) => {
               const dogCopy = {...newDog};
               dogCopy.cityId = e.target.value;
