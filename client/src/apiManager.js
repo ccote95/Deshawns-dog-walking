@@ -13,7 +13,13 @@ export const getDogById = async (id) => {
   return res.json();
 }
 
-export const addDog = async () => {
-  const res = await fetch("/api/dog/create");
-  return res.json();
+export const addDog = async (newDog) => {
+  const res = await fetch("/api/dog/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newDog)
+  });
+  
 }

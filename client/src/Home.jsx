@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { getDog, getGreeting } from "./apiManager";
+import { addDog, getDog, getGreeting } from "./apiManager";
 import { useEffect, useState } from "react";
 import"./Home.css";
 export default function Home() {
@@ -8,7 +8,8 @@ export default function Home() {
   });
   const [dog, setDog] = useState([])
   const [showModal, setShowModal]= useState(false)
-  const [newDog, setNewDog]=useState("")
+  const [newDog, setNewDog]=useState({})
+  
 
   useEffect(() => {
     getGreeting()
@@ -21,7 +22,9 @@ export default function Home() {
   useEffect(() => {
     getDog().then(setDog)
   },[]);
-
+  const handleSubmitClick =() => {
+    addDog(newDog)
+  }
   return (
     <>
     <p>{greeting.message}</p>
@@ -34,16 +37,31 @@ export default function Home() {
       )}
       </div>
         {showModal && (
+            <form onSubmit={handleSubmitClick}>
         <div>
           <div>
             <span className="close" onClick ={() => setShowModal(false)}>&times;</span>
             <h2>Add a new dog!</h2>
-            <input placeholder="Enter the new dogs name." type="text"/>
+            <div>
+            <input placeholder="Enter the new dogs name." type="text" onChange={(e) => setNewDog({Name:e.target.value})}/>
+            
+            </div>
+            <div>
+              <input placeholder="Where does the dog live?" type="text"onChange={(e) => setNewDog({Name:e.target.value})}/>
+              <button type="submit">Submit</button>
+            </div>
           </div>
         </div>
+        </form>
         )}
     </>
 
   );
   
 }
+/** need to get all cities going to have to also create an end point to get them.
+ * need to iterate thru them and create either a drop down or checkboxes for them? check with someone on that
+ * need to refactor the way im handling input changes. check capstone to remind yourself.
+ * when they click submit it should add the dog and navigate them to the dogs details page.
+ * 
+ */

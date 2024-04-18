@@ -93,13 +93,13 @@ app.MapGet("/api/dog/{id}", (int id) =>
         Id = dog.Id,
         Name = dog.Name,
         CityId = dog.CityId,
-        City = new CityDTO
+        City = cities.FirstOrDefault(c => c.Id == dog.CityId) == null ? null : new CityDTO
         {
             Id = city.Id,
             Name = city.Name
         },
         WalkerId = dog.WalkerId,
-        Walker = new WalkerDTO
+        Walker = walkers.FirstOrDefault(w => w.Id == dog.WalkerId) == null ? null : new WalkerDTO
         {
             Id = walker.Id,
             Name = walker.Name
@@ -119,13 +119,13 @@ app.MapPost("/api/dog/create", (Dog dog) =>
     {
         Id = dog.Id,
         WalkerId = dog.WalkerId,
-        Walker = new WalkerDTO
+        Walker = walkers.FirstOrDefault(w => w.Id == dog.WalkerId) == null ? null : new WalkerDTO
         {
             Id = walker.Id,
             Name = walker.Name
         },
         CityId = dog.CityId,
-        City = new CityDTO
+        City = cities.FirstOrDefault(c => c.Id == dog.CityId) == null ? null : new CityDTO
         {
             Id = city.Id,
             Name = city.Name
