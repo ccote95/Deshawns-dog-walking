@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { addDog, getDog, getGreeting } from "./apiManager";
+import { addDog, getCities, getDog, getGreeting } from "./apiManager";
 import { useEffect, useState } from "react";
 import"./Home.css";
 export default function Home() {
@@ -9,7 +9,7 @@ export default function Home() {
   const [dog, setDog] = useState([])
   const [showModal, setShowModal]= useState(false)
   const [newDog, setNewDog]=useState({})
-  
+  const [cities, setCities] = useState({})
 
   useEffect(() => {
     getGreeting()
@@ -19,9 +19,14 @@ export default function Home() {
       });
   }, []);
 
+  useEffect(()=> {
+    getCities().then(setCities)
+  }, [])
+
   useEffect(() => {
     getDog().then(setDog)
   },[]);
+
   const handleSubmitClick =() => {
     addDog(newDog)
   }
@@ -47,7 +52,15 @@ export default function Home() {
             
             </div>
             <div>
-              <input placeholder="Where does the dog live?" type="text"onChange={(e) => setNewDog({Name:e.target.value})}/>
+             <label>Where do they live?</label>
+              {cities.map((city) => {
+                return (
+                  <div>
+                    <input type="radio" value={city.id} name="city"/>
+                    <label> {city.name}</label>
+                  </div>
+                )
+              })}
               <button type="submit">Submit</button>
             </div>
           </div>
