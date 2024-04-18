@@ -23,3 +23,8 @@ export const addDog = async (newDog) => {
   });
   
 }
+
+export const getCities = async () => {
+  const res = await fetch("/api/city");
+  return res.json();
+}
