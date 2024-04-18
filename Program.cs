@@ -93,18 +93,58 @@ app.MapGet("/api/dog/{id}", (int id) =>
         Id = dog.Id,
         Name = dog.Name,
         CityId = dog.CityId,
-        City = new CityDTO
+        City = cities.FirstOrDefault(c => c.Id == dog.CityId) == null ? null : new CityDTO
         {
             Id = city.Id,
             Name = city.Name
         },
         WalkerId = dog.WalkerId,
-        Walker = new WalkerDTO
+        Walker = walkers.FirstOrDefault(w => w.Id == dog.WalkerId) == null ? null : new WalkerDTO
         {
             Id = walker.Id,
             Name = walker.Name
         }
 
     };
+});
+
+app.MapPost("/api/dog/create", (Dog dog) =>
+{
+    Walker walker = walkers.FirstOrDefault(w => w.Id == dog.WalkerId);
+    City city = cities.FirstOrDefault(c => c.Id == dog.CityId);
+
+    dog.Id = dogs.Max(d => d.Id) + 1;
+    dogs.Add(dog);
+    return Results.Created($"dog/{dog.Id}", new DogDTO
+    {
+        Id = dog.Id,
+        WalkerId = dog.WalkerId,
+        Walker = walkers.FirstOrDefault(w => w.Id == dog.WalkerId) == null ? null : new WalkerDTO
+        {
+            Id = walker.Id,
+            Name = walker.Name
+        },
+        CityId = dog.CityId,
+        City = cities.FirstOrDefault(c => c.Id == dog.CityId) == null ? null : new CityDTO
+        {
+            Id = city.Id,
+            Name = city.Name
+        }
+    });
+});
+
+//gets all of the cities
+app.MapGet("/api/city", () =>
+{
+    List<CityDTO> cityDTOs = new List<CityDTO>();
+    foreach (City city in cities)
+    {
+        cityDTOs.Add(new CityDTO
+        {
+            Id = city.Id,
+            Name = city.Name
+        });
+    }
+    return cityDTOs;
 });
 app.Run();

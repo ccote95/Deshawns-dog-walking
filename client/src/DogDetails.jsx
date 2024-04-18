@@ -8,7 +8,7 @@ export const DogDetails = () => {
 
    useEffect(() => {
     getDogById(dogId).then(setDog)
-   },[])
+   },[dogId])
 
    return (
     <>
