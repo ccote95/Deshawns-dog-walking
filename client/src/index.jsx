@@ -14,6 +14,7 @@ root.render(
       <Route path="/" element={<App />}>
         <Route index element={<Home />} />
         <Route path=":dogId" element={<DogDetails/>}/>
+        <Route path="walkers" element={"hi"}/>
       </Route>
     </Routes>
   </BrowserRouter>,
