@@ -155,4 +155,18 @@ app.MapGet("/api/city", () =>
     }
     return cityDTOs;
 });
+
+app.MapGet("/api/walker", () =>
+{
+    List<WalkerDTO> walkerDTOs = new List<WalkerDTO>();
+    foreach (Walker walker in walkers)
+    {
+        walkerDTOs.Add(new WalkerDTO
+        {
+            Id = walker.Id,
+            Name = walker.Name
+        });
+    }
+    return walkerDTOs;
+});
 app.Run();
