@@ -43,6 +43,7 @@ List<WalkerCity> walkerCities = new List<WalkerCity>{
     new() {Id = 4, CityId = 3, WalkerId = 4},
     new() {Id = 5, CityId = 4, WalkerId = 5},
     new() {Id = 6, CityId = 5, WalkerId = 6},
+    new() {Id = 7, CityId = 6, WalkerId = 1},
 
 };
 
@@ -158,15 +159,30 @@ app.MapGet("/api/city", () =>
 
 app.MapGet("/api/walker", () =>
 {
+
     List<WalkerDTO> walkerDTOs = new List<WalkerDTO>();
     foreach (Walker walker in walkers)
     {
+        // finding the walkercity that are for that walker
+        List<WalkerCity> walkerCitiesForWalkers = walkerCities.Where(wc => wc.WalkerId == walker.Id).ToList();
+
+
         walkerDTOs.Add(new WalkerDTO
         {
             Id = walker.Id,
-            Name = walker.Name
+            Name = walker.Name,
+            WalkerCity = walkerCitiesForWalkers.Select(wc => new WalkerCityDTO
+            {
+                Id = wc.Id,
+                CityId = wc.CityId,
+                WalkerId = wc.WalkerId
+            }).ToList()
+
+
         });
     }
     return walkerDTOs;
 });
+
+
 app.Run();
