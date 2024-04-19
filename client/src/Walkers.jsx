@@ -38,7 +38,7 @@ export const Walkers = () => {
             </select>
             <div>
                 {filteredWalkers.map((walkers) => 
-                <p>{walkers.name}</p>
+                <div>{walkers.name} <button>Assign a Dog</button></div>
 
             )}
             </div>

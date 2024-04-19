@@ -79,12 +79,25 @@ app.MapGet("/api/dog", () =>
     List<DogDTO> dogDTOs = new List<DogDTO>();
     foreach (Dog dog in dogs)
     {
+        Walker walker = walkers.FirstOrDefault(w => w.Id == dog.WalkerId);
+        City city = cities.FirstOrDefault(c => c.Id == dog.CityId);
         dogDTOs.Add(new DogDTO
         {
             Id = dog.Id,
             Name = dog.Name,
             CityId = dog.CityId,
-            WalkerId = dog.WalkerId
+            City = new CityDTO
+            {
+                Id = city.Id,
+                Name = city.Name
+            },
+            WalkerId = dog.WalkerId,
+            Walker = new WalkerDTO
+            {
+                Id = walker.Id,
+                Name = walker.Name,
+
+            }
 
         });
     }
@@ -112,6 +125,8 @@ app.MapGet("/api/dog/{id}", (int id) =>
         {
             Id = walker.Id,
             Name = walker.Name
+
+
         }
 
     };
