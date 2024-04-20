@@ -9,6 +9,7 @@ List<Dog> dogs = new List<Dog>{
         new() { Name = "Charlie", Id = 4, CityId = 4, WalkerId = 4 },
        new()   { Name = "Lucy", Id = 5, CityId = 5, WalkerId = 5 },
        new() { Name = "Daisy", Id = 6, CityId = 6, WalkerId = 6 },
+       new() { Name = "bob", Id = 7, CityId = 6, WalkerId = 0 },
 
  };
 
@@ -92,7 +93,7 @@ app.MapGet("/api/dog", () =>
                 Name = city.Name
             },
             WalkerId = dog.WalkerId,
-            Walker = new WalkerDTO
+            Walker = walker == null ? new WalkerDTO { Id = 0, Name = "unassigned" } : new WalkerDTO
             {
                 Id = walker.Id,
                 Name = walker.Name,
@@ -121,7 +122,7 @@ app.MapGet("/api/dog/{id}", (int id) =>
             Name = city.Name
         },
         WalkerId = dog.WalkerId,
-        Walker = walkers.FirstOrDefault(w => w.Id == dog.WalkerId) == null ? null : new WalkerDTO
+        Walker = walkers.FirstOrDefault(w => w.Id == dog.WalkerId) == null ? new WalkerDTO { Id = 0, Name = "unassigned" } : new WalkerDTO
         {
             Id = walker.Id,
             Name = walker.Name
@@ -197,6 +198,15 @@ app.MapGet("/api/walker", () =>
         });
     }
     return walkerDTOs;
+});
+
+app.MapPut("/api/dog/assign", (Dog dog) =>
+{
+    Dog currentDog = dogs.FirstOrDefault(d => d.Id == dog.Id);
+    currentDog.WalkerId = dog.WalkerId;
+    return Results.Ok();
+
+
 });
 
 

@@ -33,3 +33,15 @@ export const getWalkers = async () => {
   const res = await fetch("/api/walker");
   return res.json();
 }
+
+export const assignAWalker = async (dogWalker, walkerId) => {
+   dogWalker.walkerId = walkerId
+  return await fetch("/api/dog/assign", {
+    method: "PUT",
+    headers: {
+      "Content-Type" : "application/json",
+    },
+    body: JSON.stringify(dogWalker)
+  });
+
+}
