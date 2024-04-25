@@ -10,6 +10,7 @@ export const CityList = () => {
     },[]);
 
     const handleSubmit =() => {
+        //when the submit button is click i need to send the api the newCity
 
     }
 
