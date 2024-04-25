@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { assignAWalker, getCities, getDog, getWalkers } from "./apiManager.js"
 import { Link } from "react-router-dom"
+import"./Home.css";
 
 export const Walkers = () => {
     const [walkers, setWalkers] = useState([])
@@ -46,8 +47,19 @@ export const Walkers = () => {
         setShowModal(true)
         const currentWalker = walkers.filter(w => w.id == parseInt(e));
         setCurrentWalkerId(currentWalker[0].id)
-        const dogArr = dogs.filter(d => d.cityId == currentWalker[0].walkerCity[0].cityId).filter(d => d.walkerId != currentWalker[0].id)
-        setFilteredDogs(dogArr);
+        const dogObj = []
+        currentWalker[0]?.walkerCity?.map((cw)=> {
+            dogs.map((d) => {
+                if(d.cityId == cw.cityId&& d.walkerId != currentWalker[0].id)
+                {
+                    if(!dogObj.includes(d))
+                    {
+                        dogObj.push(d)
+                    }
+                }
+            })
+        })
+        setFilteredDogs(dogObj);
 
     }
 
@@ -71,9 +83,15 @@ export const Walkers = () => {
             )}
             </div>
             {showModal && (
+            <div>
+                <div>
+                    <span className="close" onClick ={() => setShowModal(false)}>&times;</span>
+                </div>
+                <h3>Select a Dog</h3>
                 <div>{filteredDogs.map((dog) => {
                     return <p>{<Link onClick={() => {handleNameClick(dog)}} to ={`/${dog.id}`} value ={dog}  style={{ textDecoration: "none", color: "black" }}>{dog.name}</Link>}</p>
                 })}</div>
+            </div>
             )}
         </div>
     )

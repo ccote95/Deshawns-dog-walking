@@ -7,7 +7,7 @@ List<Dog> dogs = new List<Dog>{
         new()  { Name = "Max", Id = 2, CityId = 2, WalkerId = 2 },
         new()  { Name = "Bailey", Id = 3, CityId = 3, WalkerId = 3 },
         new() { Name = "Charlie", Id = 4, CityId = 4, WalkerId = 4 },
-       new()   { Name = "Lucy", Id = 5, CityId = 5, WalkerId = 5 },
+       new()   { Name = "Lucy", Id = 5, CityId = 5, WalkerId = 0 },
        new() { Name = "Daisy", Id = 6, CityId = 6, WalkerId = 6 },
        new() { Name = "bob", Id = 7, CityId = 6, WalkerId = 0 },
 
@@ -38,13 +38,13 @@ List<Walker> walkers = new List<Walker>{
          };
 
 List<WalkerCity> walkerCities = new List<WalkerCity>{
-    new() {Id = 1, CityId = 1, WalkerId = 1},
+    new() {Id = 1, CityId = 6, WalkerId = 1},
     new() {Id = 2, CityId = 1, WalkerId = 2},
     new() {Id = 3, CityId = 2, WalkerId = 3},
     new() {Id = 4, CityId = 3, WalkerId = 4},
     new() {Id = 5, CityId = 4, WalkerId = 5},
     new() {Id = 6, CityId = 5, WalkerId = 6},
-    new() {Id = 7, CityId = 6, WalkerId = 1},
+    new() {Id = 7, CityId = 1, WalkerId = 1},
 
 };
 
