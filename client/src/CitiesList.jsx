@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getCities } from "./apiManager.js";
+import { addNewCity, getCities } from "./apiManager.js";
 
 export const CityList = () => {
     const [cities, setCities] = useState([])
@@ -7,10 +7,13 @@ export const CityList = () => {
 
     useEffect(() => {
         getCities().then(setCities)
-    },[]);
+    },[cities]);
 
-    const handleSubmit =() => {
+    const handleSubmit =(e) => {
+        e.preventDefault()
         //when the submit button is click i need to send the api the newCity
+        addNewCity(newCity)
+        setNewCity({name: ""})
 
     }
 
@@ -18,12 +21,12 @@ export const CityList = () => {
         <div>
             <div>
                  <div>
-                <input type="text" placeholder="Add a City" onChange={(e) => {
+                <input type="text" placeholder="Add a City" value={newCity.name} onChange={(e) => {
                     const userCopy = {...newCity};
                     userCopy.name = e.target.value
                     setNewCity(userCopy);
                 }}/>
-                <button onClick={handleSubmit}>Submit</button>
+                <button onClick={(e) => {handleSubmit(e)}}>Submit</button>
                     
                  </div>
                 {cities.map(city => {
