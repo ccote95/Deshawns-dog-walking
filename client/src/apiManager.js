@@ -45,3 +45,13 @@ export const assignAWalker = async (dogWalker, walkerId) => {
   });
 
 }
+
+export const addNewCity = async (newCity) => {
+  return await fetch("/api/city/new", {
+    method: "POST",
+    headers: {
+      "Content-Type" : "application/json",
+    },
+    body: JSON.stringify(newCity)
+  });
+}
