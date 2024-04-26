@@ -258,4 +258,11 @@ app.MapDelete("/api/walkercity/remove", (int cityId, int walkerId) =>
     WalkerCity walkerCity = walkerCities.FirstOrDefault(wc => wc.CityId == cityId && wc.WalkerId == walkerId);
     walkerCities.Remove(walkerCity);
 });
+
+
+app.MapDelete("/api/dog/remove", (int dogId) =>
+{
+    Dog dog = dogs.FirstOrDefault(d => d.Id == dogId);
+    dogs.Remove(dog);
+});
 app.Run();
