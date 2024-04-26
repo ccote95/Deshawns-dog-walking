@@ -19,7 +19,11 @@ root.render(
         <Route path=":dogId" element={<DogDetails/>}/>
         <Route path="walkers" element={<Walkers/>}/>
         <Route path="citieslist" element={<CityList/>}/>
-        <Route path="walkerdetails" element={<WalkerDetails/>}/>
+        <Route path="walkers">
+        <Route index element={<Walkers/>}/>
+        <Route path=":walkerId" element={<WalkerDetails/>}/>
+
+        </Route>
       </Route>
     </Routes>
   </BrowserRouter>,

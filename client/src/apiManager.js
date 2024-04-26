@@ -55,3 +55,9 @@ export const addNewCity = async (newCity) => {
     body: JSON.stringify(newCity)
   });
 }
+
+export const getWalkerById = async (id) => {
+  const res =  await fetch(`/api/walker/${id}`)
+  return res.json()
+
+}
