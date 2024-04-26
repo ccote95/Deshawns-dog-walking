@@ -219,6 +219,26 @@ app.MapPost("/api/city/new", (City city) =>
         Name = city.Name
     });
 });
+// to get cities that match the walkerId
+// need to iterate thru walkercity to find the walkerCity that matches that walkerId
+app.MapGet("/api/walker/{id}", (int id) =>
+{
+    Walker walker = walkers.FirstOrDefault(w => w.Id == id);
+    List<WalkerCity> walkerCititesForwalkers = walkerCities.Where(wc => wc.WalkerId == walker.Id).ToList();
+    return new WalkerDTO
+    {
+        Id = walker.Id,
+        Name = walker.Name,
+        WalkerCity = walkerCititesForwalkers.Select(wc => new WalkerCityDTO
+        {
+            Id = wc.Id,
+            CityId = wc.CityId,
+            WalkerId = wc.WalkerId
+        }).ToList()
+
+
+    };
+});
 
 
 app.Run();
