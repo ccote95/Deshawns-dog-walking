@@ -55,3 +55,30 @@ export const addNewCity = async (newCity) => {
     body: JSON.stringify(newCity)
   });
 }
+
+export const getWalkerById = async (id) => {
+  const res =  await fetch(`/api/walker/${id}`)
+  return res.json()
+
+}
+
+export const assignWalkerToNewCity = async (cityId,currentWalkerId) => {
+  const newWalkerCity = {
+    cityId : cityId,
+    walkerId : currentWalkerId
+  }
+    return await fetch("/api/walkercity/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newWalkerCity)
+    })
+  
+}
+
+export const unAssignWalkerFromCity = async (cityId, walkerId) => {
+  const res = await fetch(`/api/walkercity/remove?cityId=${cityId}&walkerId=${walkerId}`, {
+    method: "DELETE"
+  });
+}

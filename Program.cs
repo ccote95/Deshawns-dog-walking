@@ -220,5 +220,42 @@ app.MapPost("/api/city/new", (City city) =>
     });
 });
 
+// need to iterate thru walkercity to find the walkerCity that matches that walkerId
+app.MapGet("/api/walker/{id}", (int id) =>
+{
+    Walker walker = walkers.FirstOrDefault(w => w.Id == id);
+    List<WalkerCity> walkerCititesForwalkers = walkerCities.Where(wc => wc.WalkerId == walker.Id).ToList();
+    return new WalkerDTO
+    {
+        Id = walker.Id,
+        Name = walker.Name,
+        WalkerCity = walkerCititesForwalkers.Select(wc => new WalkerCityDTO
+        {
+            Id = wc.Id,
+            CityId = wc.CityId,
+            WalkerId = wc.WalkerId
+        }).ToList()
 
+
+    };
+});
+
+app.MapPost("/api/walkercity/create", (WalkerCity walkerCity) =>
+{
+    walkerCity.Id = walkerCities.Max(wc => wc.Id) + 1;
+    walkerCities.Add(walkerCity);
+    return Results.Created($"/api/walkercity", new WalkerCityDTO
+    {
+        Id = walkerCity.Id,
+        CityId = walkerCity.CityId,
+        WalkerId = walkerCity.WalkerId
+    });
+});
+
+
+app.MapDelete("/api/walkercity/remove", (int cityId, int walkerId) =>
+{
+    WalkerCity walkerCity = walkerCities.FirstOrDefault(wc => wc.CityId == cityId && wc.WalkerId == walkerId);
+    walkerCities.Remove(walkerCity);
+});
 app.Run();
