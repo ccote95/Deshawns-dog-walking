@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { addDog, getCities, getDog, getGreeting } from "./apiManager";
+import { addDog, deleteADog, getCities, getDog, getGreeting } from "./apiManager";
 import { useEffect, useState } from "react";
 import"./Home.css";
 export default function Home() {
@@ -26,7 +26,7 @@ export default function Home() {
 
   useEffect(() => {
     getDog().then(setDog)
-  },[]);
+  },[dog]);
 
   const handleSubmitClick =(e) => {
     e.preventDefault();
@@ -36,11 +36,11 @@ export default function Home() {
     });
   }
 
-  // const handleRadioChange = (e) => {
-  //   const cityId = parseInt(e.target.value);
-  //   const cityName = chosenCity
-  //   setChosenCity({id: cityId, name: cityName})
-  // }
+  const handleDelete = (dogId) => {
+    deleteADog(dogId)
+  }
+
+
   return (
     <>
     <p>{greeting.message}</p>
@@ -49,7 +49,7 @@ export default function Home() {
     </div>
     <div>
         {dog.map((dog) =>
-      <div key = {dog.id}><Link to ={`/${dog.id}`}  style={{ textDecoration: "none", color: "black" }}>{dog.name}</Link> <button>DELETE</button></div>
+      <div key = {dog.id}><Link to ={`/${dog.id}`}  style={{ textDecoration: "none", color: "black" }}>{dog.name}</Link> <button onClick={() => {handleDelete(dog.id)}}>DELETE</button></div>
     )}
    
       </div>

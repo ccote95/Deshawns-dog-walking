@@ -82,3 +82,9 @@ export const unAssignWalkerFromCity = async (cityId, walkerId) => {
     method: "DELETE"
   });
 }
+
+export const deleteADog = async (dogId) => {
+  const res = await fetch(`/api/dog/remove?dogId=${dogId}`, {
+    method: "DELETE"
+  });
+}
