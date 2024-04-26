@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react"
 import {assignWalkerToNewCity, getCities, getWalkerById, unAssignWalkerFromCity } from "./apiManager.js"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 export const WalkerDetails =() => {
   const [walker, setWalker] = useState({})
   const [cities, setCities] = useState([])
   const {walkerId} = useParams()
+  const navigate = useNavigate()
 
   useEffect(() => {
     getWalkerById(walkerId).then(setWalker)
     getCities().then(setCities)
-  },[])
+  },[walkerId])
 
 
   const handleCheckingANewBox = (cityId) => {
@@ -21,18 +22,17 @@ export const WalkerDetails =() => {
     unAssignWalkerFromCity(cityId, walkerId)
   }
 
+  const navigateToWalkersView = () => {
+    navigate("/walkers")
+  }
+
   const displayCheckBoxes = () => {
     const CitiesTheWalkerLivesIn = []
     const CitiesTheWalkerDoesNotLiveIn = []
     for (const city of cities) {
-        let isCityInWalkerCities = false;
+       
         
-        for (const wc of walker.walkerCity) {
-            if (city.id === wc.cityId) {
-                isCityInWalkerCities = true;
-                break;
-            }
-        }
+        const isCityInWalkerCities = walker.walkerCity?.map(wc => wc.cityId).some(id => id === city.id);
 
         if (isCityInWalkerCities) {
             CitiesTheWalkerLivesIn.push(city);
@@ -69,6 +69,7 @@ return(
         <div>
             <h4>{walker.name}</h4>
             {displayCheckBoxes()}
+            <button onClick={navigateToWalkersView}>Submit</button>
         </div>
     </div>
 )
