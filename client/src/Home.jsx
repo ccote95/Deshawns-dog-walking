@@ -49,8 +49,9 @@ export default function Home() {
     </div>
     <div>
         {dog.map((dog) =>
-      <p key = {dog.id}><Link to ={`/${dog.id}`}  style={{ textDecoration: "none", color: "black" }}>{dog.name}</Link></p>
-      )}
+      <div key = {dog.id}><Link to ={`/${dog.id}`}  style={{ textDecoration: "none", color: "black" }}>{dog.name}</Link> <button>DELETE</button></div>
+    )}
+   
       </div>
         {showModal && (
             <form  onSubmit={handleSubmitClick}>
