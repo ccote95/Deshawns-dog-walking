@@ -1,5 +1,6 @@
+import { useState } from "react"
+
 export const WalkerDetails =() => {
-    return (
-        <p>hello</p>
-    )
+  const [walkersCities, setWalkersCities] = useState([])
+  
 }
