@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getCities, getWalkerById } from "./apiManager.js"
+import {assignWalkerToNewCity, getCities, getWalkerById } from "./apiManager.js"
 import { useParams } from "react-router-dom"
 
 export const WalkerDetails =() => {
@@ -11,6 +11,11 @@ export const WalkerDetails =() => {
     getWalkerById(walkerId).then(setWalker)
     getCities().then(setCities)
   },[])
+
+
+  const handleCheckingANewBox = (cityId) => {
+    assignWalkerToNewCity(cityId, walkerId)
+  }
 
   const displayCheckBoxes = () => {
     const CitiesTheWalkerLivesIn = []
@@ -36,7 +41,7 @@ export const WalkerDetails =() => {
             {/* Checkboxes for cities the walker lives in */}
             {CitiesTheWalkerLivesIn.map((city) => (
                 <label key={city.id}>
-                    <input type="checkbox" value={city.id} defaultChecked />
+                    <input type="checkbox" onChange={handleCheckingANewBox} value={city.id} defaultChecked />
                     {city.name}
                 </label>
             ))}
@@ -44,7 +49,7 @@ export const WalkerDetails =() => {
             {/* Checkboxes for cities the walker does not live in */}
             {CitiesTheWalkerDoesNotLiveIn.map((city) => (
                 <label key={city.id}>
-                    <input type="checkbox" value={city.id} />
+                    <input type="checkbox"onChange={() => {handleCheckingANewBox(city.id)}} value={city.id} />
                     {city.name}
                 </label>
             ))}

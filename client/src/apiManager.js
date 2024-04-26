@@ -61,3 +61,18 @@ export const getWalkerById = async (id) => {
   return res.json()
 
 }
+
+export const assignWalkerToNewCity = async (cityId,currentWalkerId) => {
+  const newWalkerCity = {
+    cityId : cityId,
+    walkerId : currentWalkerId
+  }
+    return await fetch("", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newWalkerCity)
+    })
+  
+}
