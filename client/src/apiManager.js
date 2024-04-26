@@ -76,3 +76,9 @@ export const assignWalkerToNewCity = async (cityId,currentWalkerId) => {
     })
   
 }
+
+export const unAssignWalkerFromCity = async (cityId, walkerId) => {
+  const res = await fetch(`/api/walkercity/remove?cityId=${cityId}&walkerId=${walkerId}`, {
+    method: "DELETE"
+  });
+}

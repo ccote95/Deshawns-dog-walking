@@ -252,4 +252,10 @@ app.MapPost("/api/walkercity/create", (WalkerCity walkerCity) =>
     });
 });
 
+
+app.MapDelete("/api/walkercity/remove", (int cityId, int walkerId) =>
+{
+    WalkerCity walkerCity = walkerCities.FirstOrDefault(wc => wc.CityId == cityId && wc.WalkerId == walkerId);
+    walkerCities.Remove(walkerCity);
+});
 app.Run();
