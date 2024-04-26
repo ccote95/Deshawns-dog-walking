@@ -219,7 +219,7 @@ app.MapPost("/api/city/new", (City city) =>
         Name = city.Name
     });
 });
-// to get cities that match the walkerId
+
 // need to iterate thru walkercity to find the walkerCity that matches that walkerId
 app.MapGet("/api/walker/{id}", (int id) =>
 {
@@ -240,5 +240,16 @@ app.MapGet("/api/walker/{id}", (int id) =>
     };
 });
 
+app.MapPost("/api/walkercity/create", (WalkerCity walkerCity) =>
+{
+    walkerCity.Id = walkerCities.Max(wc => wc.Id) + 1;
+    walkerCities.Add(walkerCity);
+    return Results.Created($"/api/walkercity", new WalkerCityDTO
+    {
+        Id = walkerCity.Id,
+        CityId = walkerCity.CityId,
+        WalkerId = walkerCity.WalkerId
+    });
+});
 
 app.Run();

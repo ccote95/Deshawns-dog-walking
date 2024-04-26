@@ -67,7 +67,7 @@ export const assignWalkerToNewCity = async (cityId,currentWalkerId) => {
     cityId : cityId,
     walkerId : currentWalkerId
   }
-    return await fetch("", {
+    return await fetch("/api/walkercity/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
