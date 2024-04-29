@@ -78,7 +78,9 @@ export const Walkers = () => {
             </select>
             <div>
                 {filteredWalkers.map((walker) => 
-                <div><Link to={`/walkers/${walker.id}`} style={{ textDecoration: "none", color: "black" }}>{walker.name}</Link> <button value={walker.id} onClick={(e) => handleAssignDog(e.target.value)}>Assign a Dog</button></div>
+                <div><Link to={`/walkers/${walker.id}`} style={{ textDecoration: "none", color: "black" }}>{walker.name}</Link> <button value={walker.id} onClick={(e) => handleAssignDog(e.target.value)}>Assign a Dog</button>
+                <button>Remove Walker</button>
+                </div>
 
             )}
             </div>
