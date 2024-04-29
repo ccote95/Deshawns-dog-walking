@@ -88,3 +88,9 @@ export const deleteADog = async (dogId) => {
     method: "DELETE"
   });
 }
+
+export const removeAWalker = async (id) => {
+  const res = await fetch(`/api/walker/remove?id=${id}`, {
+    method: "DELETE"
+  });
+}

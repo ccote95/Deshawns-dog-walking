@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { assignAWalker, getCities, getDog, getWalkers } from "./apiManager.js"
+import { assignAWalker, getCities, getDog, getWalkers, removeAWalker } from "./apiManager.js"
 import { Link } from "react-router-dom"
 import"./Home.css";
 
@@ -17,7 +17,7 @@ export const Walkers = () => {
         getWalkers().then(setWalkers)
         getCities().then(setCities)
         getDog().then(setDogs)
-    },[])
+    },[walkers])
 
  
     const handleChange = (e) => {
@@ -68,8 +68,8 @@ export const Walkers = () => {
 
     }
 
-    const handleRemovingAWalker = () => {
-
+    const handleRemovingAWalker = (id) => {
+        removeAWalker(id)
     }
 
     return(
