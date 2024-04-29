@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { assignAWalker, getCities, getDog, getWalkers } from "./apiManager.js"
+import { assignAWalker, getCities, getDog, getWalkers, removeAWalker } from "./apiManager.js"
 import { Link } from "react-router-dom"
 import"./Home.css";
 
@@ -17,7 +17,7 @@ export const Walkers = () => {
         getWalkers().then(setWalkers)
         getCities().then(setCities)
         getDog().then(setDogs)
-    },[])
+    },[walkers])
 
  
     const handleChange = (e) => {
@@ -68,6 +68,10 @@ export const Walkers = () => {
 
     }
 
+    const handleRemovingAWalker = (id) => {
+        removeAWalker(id)
+    }
+
     return(
         <div>
             <select onChange={(e) => {handleChange(e.target.value)}}>
@@ -78,7 +82,9 @@ export const Walkers = () => {
             </select>
             <div>
                 {filteredWalkers.map((walker) => 
-                <div><Link to={`/walkers/${walker.id}`} style={{ textDecoration: "none", color: "black" }}>{walker.name}</Link> <button value={walker.id} onClick={(e) => handleAssignDog(e.target.value)}>Assign a Dog</button></div>
+                <div><Link to={`/walkers/${walker.id}`} style={{ textDecoration: "none", color: "black" }}>{walker.name}</Link> <button value={walker.id} onClick={(e) => handleAssignDog(e.target.value)}>Assign a Dog</button>
+                <button value={walker.id} onClick={(e) => handleRemovingAWalker(e.target.value)}>Remove Walker</button>
+                </div>
 
             )}
             </div>
